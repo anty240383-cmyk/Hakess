@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sito Fake Password</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e0e0e0;
+            font-family: sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .box-centrale {
+            text-align: center;
+            padding: 40px;
+            background: #fff;
+            border: 3px solid #000; /* Quadrato che racchiude tutto */
+        }
+
+        /* Il quadrato della password */
+        input[type="password"] {
+            display: block;
+            margin-bottom: 25px;
+            padding: 12px;
+            border: 2px solid #333; 
+            font-size: 18px;
+            width: 200px;
+            outline: none;
+        }
+
+        /* Il quadrato azzurro per l'invio */
+        #tasto-invia {
+            background-color: #00ccff; 
+            color: black;
+            padding: 10px 40px;
+            border: 3px solid #0099cc; /* Bordo azzurro più scuro */
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Contenitore video (nascosto) */
+        #overlay-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Mantiene le proporzioni del tuo video */
+        }
+    </style>
+</head>
+<body>
+
+<div class="box-centrale">
+    <input type="password" placeholder="PASSWORD">
+    
+    <button id="tasto-invia">INVIA</button>
+</div>
+
+<div id="overlay-video">
+    <video id="videoPlayer">
+        <source src="nome_del_tuo_video.mp4" type="video/mp4">
+        Il tuo browser non supporta il video.
+    </video>
+</div>
+
+<script>
+    const tasto = document.getElementById('tasto-invia');
+    const display = document.getElementById('overlay-video');
+    const video = document.getElementById('videoPlayer');
+
+    tasto.addEventListener('click', () => {
+        // Mostra il video
+        display.style.display = 'flex';
+        
+        // Lo fa partire da zero e lo avvia automaticamente
+        video.currentTime = 0;
+        video.play();
+
+        // Quando il video finisce, si chiude da solo e torna alla password
+        video.onended = () => {
+            display.style.display = 'none';
+        };
+    });
+
+    // Se vuoi chiudere il video cliccando sullo schermo prima che finisca
+    display.addEventListener('click', () => {
+        video.pause();
+        display.style.display = 'none';
+    });
+</script>
+
+</body>
+</html>
